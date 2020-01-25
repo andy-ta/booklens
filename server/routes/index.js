@@ -6,11 +6,11 @@ const dictionaryController = require('../controllers/dictionaryController');
 
 /* GET mamaw. */
 router.get('/', (req, res, next) => {
-  res.send('gietmamaw');
+    res.send('gietmamaw');
 });
 
 router.post('/image', i2tController.getText);
 
-router.post('/syllable', dictionaryController.getSyllable);
+router.get('/syllable/:word', dictionaryController.getSyllable);
 
 module.exports = router;
