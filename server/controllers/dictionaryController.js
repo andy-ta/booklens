@@ -11,10 +11,11 @@ exports.getSyllable = (req, res) => {
         .then(r => {
             let result;
             if (r.data.length && r.data[0].hwi) {
-                result = (({ hw, prs }) => ({
-                    syllable: hw.split("*"),
-                    ipa: prs[0].mw.split("-")
-                }))(r.data[0].hwi);
+                result = (({ hwi, fl }) => ({
+                    syllable: hwi.hw.split("*"),
+                    ipa: hwi.prs[0].mw.split("-"),
+                    isNoun: fl === 'noun'
+                }))(r.data[0]);
             } else {
                 result = {};
             }
