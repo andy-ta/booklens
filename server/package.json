@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@google-cloud/vision": "^1.8.0",
+    "axios": "^0.19.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
