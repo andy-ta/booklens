@@ -4,5 +4,6 @@
     <mapping directory="$PROJECT_DIR$/client/BookLens" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/client/myApp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/server/test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>

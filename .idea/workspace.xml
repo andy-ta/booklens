@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2453a38a-f60d-426b-b9e4-acfd85818178" name="Default Changelist" comment="" />
+    <list default="true" id="2453a38a-f60d-426b-b9e4-acfd85818178" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/BookLens.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BookLens.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/server/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/booklens.json" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server/test" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="ProjectId" id="1Wrtb28XaT2ntDh3MPkJ09buhzM" />
@@ -57,6 +63,7 @@
       <option name="presentableId" value="Default" />
       <updated>1579919609150</updated>
       <workItem from="1579919612223" duration="10299000" />
+      <workItem from="1579962839045" duration="1406000" />
     </task>
     <servers />
   </component>
@@ -72,9 +79,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579920811618" />
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1579919631887">
+    <state x="636" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1579962839605">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579919631887" />
+    <state x="636" y="342" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579962839605" />
   </component>
 </project>
