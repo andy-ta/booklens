@@ -1,5 +1,5 @@
 const vision = require('@google-cloud/vision');
-
+const fs = require('fs');
 // Creates a client
 const client = new vision.ImageAnnotatorClient();
 
@@ -8,16 +8,21 @@ const client = new vision.ImageAnnotatorClient();
  */
 
 const fileName = 'assets/fatChick.jpg';
+const file = 'assets/hello.jpg';
 
-exports.hello = (req, res) => {
+exports.getText = (req, res) => {
+  const { image } = req.body;/*
+  console.log(image);
+  fs.writeFile(file, new Buffer(image, "base64"), function(err) {});*/
+
   // Performs text detection on the local file
-  client.textDetection(fileName)
+  client.textDetection(image)
     .then((result) => {
     const detections = result[0].textAnnotations;
+    console.log(detections);
     const filter = detections.filter((value) => {
       return value.description.split(" ").length === 1;
     });
-    console.log(filter);
     const filteredResults = [];
     filter.forEach(wordObj => {
       let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
@@ -28,7 +33,6 @@ exports.hello = (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-/*  */
 };
 
 

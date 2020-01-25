@@ -7,6 +7,6 @@ router.get('/', (req, res, next) => {
   res.send('gietmamaw');
 });
 
-router.get('/image', i2tController.hello);
+router.post('/image', i2tController.getText);
 
 module.exports = router;
