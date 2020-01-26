@@ -21,10 +21,10 @@ const file = 'assets/hello.jpg';
 
 exports.getText = (req, res) => {
   const { image } = req.body;
-  let imageFile = fs.writeFile(file, new Buffer(image, "base64"), function(err) {});
+  //let imageFile = fs.writeFile(file, new Buffer(image, "base64"), function(err) {});
 
   // Performs text detection on the local file
-  client.textDetection(fileName)
+  client.textDetection(file)
     .then((result) => {
     const detections = result[0].textAnnotations;
     const filter = detections.filter((value) => {
@@ -35,7 +35,7 @@ exports.getText = (req, res) => {
       let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
       filteredResults.push(filteredWordObj);
     });
-    res.json(new Page(++pageId, parse(detections), Buffer.from(imageFile).toString('base64')));
+    res.json(new Page(++pageId, parse(detections), 'caca'));
   })
     .catch((err) => {
       console.log(err);
@@ -47,13 +47,14 @@ function parse(results) {
   const sentences = results[0].description.split('\n');
   for (let sentence of sentences) {
     let words = sentence.split(' ');
-    console.log(words);
     words = words.map((e, i) => {
-      console.log({e, i});
-      return { index: i, word: e};
-    });
-    const newSentence = new Sentence(++sentenceId, words, sentence);
-    phrases.push(newSentence);
+      return e === '' ? null : { index: i, word: e};
+    }).filter(val => val !== null);
+
+    if (words.length > 0) {
+      const newSentence = new Sentence(++sentenceId, words, sentence);
+      phrases.push(newSentence);
+    }
   }
   results.splice(0, 1); // delete the sentences XD;
 
