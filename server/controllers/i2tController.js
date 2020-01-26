@@ -55,7 +55,7 @@ exports.getText = (req, res) => {
 
 function parse(results) {
   const phrases = [];
-  const sentences = results[0].description.replace(/\n/g, ' ').split(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g);
+  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/g, '$1\u03B1').split('\u03B1');
   for (let sentence of sentences) {
     let words = sentence.split(' ');
     words = words.map((e, i) => {
