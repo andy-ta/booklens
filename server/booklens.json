@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "booklens-266214",
+    "private_key_id": "9f138c0abf986b63ad5c22e7515ae265432661bf",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDYhnfZnX3KvX25\nLUguxlr1hQoft/uHbMXFtJXYAVTAPnf4+G0ciCsvglOndEeRQvvWTXUTHxmAad0Q\npjKYA5dpLtdbGmRgtRecRetgo5YyVyf0vQw0syNJdcotH05p6YRvQW/ONbhGbMT+\nJcOvX+sQYYHYptR3D1JBzPWyhwL98lizPRvKXFayusJXsBXoxZMwdoenMRzQQ+c1\n+4om4odi7fg+BhyiYBpjCncAmhMnSkBIwjGmKhAG0hv81mg1b9Ase6/oHbZud08u\nAgoa4FwWerYR0vxWDfNbjMKVyqb1oXuphefTn6w2fH4/WJtdF01CiZEY1Mnrbni2\nSd08fG/TAgMBAAECggEAYAZuk4d5eJbF8YBIAVp9j2IThdKZzcrrAM2gIJ4igGmT\n2koOVbd784NoZxy1+pGKz1UlpTfHHwCUBiS2zlzVYtPftSsEtjDJykfl5cNWwneN\npEfM6HhDn3oKEi3OoEDsN0z9cSW41h651H5aBOZUgLzFkZgXJMAaOk1T73tZ09W7\n8fnS3R0GPclm34Bze897F4QNbnrY64kTYPq2+zGlapaypf7AvrjWiBi7oysTKO98\nsVvItcXplKC3AlfC3lfU+ur6utSO8atpSJ7/0t8bCpHOA61ZrZVuSoO0HxcgFC1K\n/iPsOMEFEFfBm/PH1GTfs6ueOFzWaCqvWmdFqG/HJQKBgQD3m5x+KkHkfVvIpjRl\nUn22xwS2nQkAjFBolwpWR28Nl13SJexegLx+f/9HIeiECBcZG6RLeeXtze27wxwb\np0D69Y1UoYxUvRNo9IIFkdvmEmmMHbxJHq5mssDmn75rtobiDKLuce99s6nK0ujR\n281UB8Wb8Givx2Qo0NmtOKVw/QKBgQDf3SqXCZ6jR4yoGMxQXJ11PCy0gGEqQyrS\noq0L9LDAhFPQ/DTdZCXFcY8kVREYtQODjAuQjeW1dxQOh+RUNWjn0btiJKZxinkv\nKvE+t7NPLg09OtyzYBv4oNV9VG++IFIy86sLahbC3qXi3tO7vtMAy5RNjhwuLc66\n8GTvT0NlDwKBgQD3kfBzuV6uzaSSx5PF5yfpM66DxBm3IZRYLwTX5Y6lIT5emypu\nBvvw45vjjITGVqx5n0izaos6LVdREDEveRiglBoej3QXWgFpRGgol4Et1iUQQr76\nwSGRb5MuRHSJkDPnGslh7iuOHLBdKmo9Qi9XoHm1hDe34X5EzSWIbAYHJQKBgCuB\n72IVU4iGQlb1IthHd66uOD4IaVnuXec8CIe3UZbI4QVPzvJsIU8jR9+WzNDRdVJe\nqGy6tzcyYmqEjKK1EqNjRpjHaLXOZMj+/o3i4+1ylM4en4AZILaMg5FtFJ6N54vR\ngZ+hSbUr0m+qQNpPNvEDn9oG0YFEE9aPG/7Kl92PAoGAVWfq7kaATAidFgmPoZ4F\n9lhuXSfm+KTrAXFBFW+PjfE09S4f2Tw5kYzWq/Ixw+um/vbCnslcIPlxrjqmHcoj\nV++7ptiLc+tmK2MH7UphyEo28+3l6e6b6Syr9xxqbgaNYLaYipFX8T7/b3kErLI5\nkN0KrrDJpy1C44T4R+Gcikc=\n-----END PRIVATE KEY-----\n",
+    "client_email": "booklens@booklens-266214.iam.gserviceaccount.com",
+    "client_id": "100711448835944774151",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/booklens%40booklens-266214.iam.gserviceaccount.com"
+}
