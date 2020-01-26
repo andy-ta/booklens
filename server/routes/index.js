@@ -14,6 +14,6 @@ router.post('/image', i2tController.getText);
 
 router.get('/syllable/:word', dictionaryController.getSyllable);
 
-router.get('/:word/images', wordToImageController.getImages);
+router.get('words/:word/images', wordToImageController.getImages);
 
 module.exports = router;
