@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
 require('dotenv').config();
-const i2tController = require('../controllers/i2tController');
 const dictionaryController = require('../controllers/dictionaryController');
 const wordToImageController = require('../controllers/wordToImagesController');
+const translateController = require('../controllers/translateController');
 
-/* GET mamaw. */
-router.get('/', (req, res, next) => {
-    res.send('gietmamaw');
-});
-
-router.post('/pages', i2tController.getText);
+router.get('/translate/:type/:id', translateController.getTranslation);
 
 router.get('/syllable/:word', dictionaryController.getSyllable);
 

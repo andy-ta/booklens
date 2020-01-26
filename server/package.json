@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@google-cloud/translate": "^5.1.4",
     "@google-cloud/vision": "^1.8.0",
     "axios": "^0.19.2",
     "cookie-parser": "~1.4.4",
