@@ -10,6 +10,8 @@ const i2tController = require('../controllers/i2tController');
 
 router.post('/pages', upload.single('image'), i2tController.getText);
 
+router.get('/pages/:id/image', i2tController.getImage);
+
 router.get('/translate/:type/:id', translateController.getTranslation);
 
 router.get('/syllable/:word', dictionaryController.getSyllable);

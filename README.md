@@ -28,3 +28,5 @@ body:
 2. /api/translate/:type/:id?target=${lang} 
 ###### get images of a word 
 3. /api/words/:word/images
+###### get image of a page
+4. /api/pages/:id/image

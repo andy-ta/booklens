@@ -2,6 +2,7 @@ let { sentenceId, wordId, pageId } = require('../services/index');
 const { Sentence } = require('../models/sentence');
 const { Word } = require('../models/word');
 const { Page } = require('../models/page');
+const pages = require('../services/database');
 const axios = require('axios');
 const dictAPI = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`;
 const url = keyword => {
@@ -19,6 +20,11 @@ const client = new vision.ImageAnnotatorClient();
 const fileName = 'assets/fatChick.jpg';
 const file = 'assets/hello.jpg';
 
+exports.getImage = (req, res) => {
+  const { id } = req.params;
+  res.sendFile(pages.pages.find(page => page.id === parseInt(id)).image);
+};
+
 exports.getText = (req, res) => {
   // Performs text detection on the local file
   client.textDetection(req.file.path)
@@ -32,7 +38,9 @@ exports.getText = (req, res) => {
       let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
       filteredResults.push(filteredWordObj);
     });
-    res.json(new Page(++pageId, parse(detections), req.file.path));
+    const p = new Page(++pageId, parse(detections), req.file.path);
+    pages.pages.push(p);
+    res.json(p);
   })
     .catch((err) => {
       console.log(err);
@@ -56,9 +64,8 @@ function parse(results) {
   results.splice(0, 1); // delete the sentences XD;
 
   phrases.forEach(sentence => {
-    sentence.words.map(async word => {
-      const izNoun = await isNoun(word.word);
-      return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, izNoun);
+    sentence.words = sentence.words.map(word => {
+      return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, true);
     });
   });
 
