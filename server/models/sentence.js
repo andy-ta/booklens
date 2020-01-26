@@ -1,6 +1,7 @@
 class Sentence {
-    constructor(id, words, sentenceString) {
+    constructor(id, sentenceNumber, words, sentenceString) {
         this.id = id;
+        this.sentenceNumber = sentenceNumber;
         this.words = words;
         this.sentenceString = sentenceString;
     }

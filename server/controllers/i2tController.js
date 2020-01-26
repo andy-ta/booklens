@@ -55,8 +55,28 @@ exports.getText = (req, res) => {
 
 function parse(results) {
   const phrases = [];
-  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.!?])/g, '$1\u03B1').split('\u03B1');
-  let index = 0;
+
+  const sentences = results[0].description
+      .replace(/\n/g, ' ')
+      .replace(/([.!?])/g, '$1\u03B1')
+      .split('\u03B1')
+      .map(sentence => sentence.trim());
+  sentences.forEach((sentence, i) => {
+    phrases.push(new Sentence(++sentenceId, i, [], sentence));
+  });
+
+  let index = 1;
+  phrases.forEach((sentence, x) => {
+    // Go through each actual word
+    for (let i = index; i < results.length; i++) {
+      if (sentence.sentenceString.includes(results[i].description)) {
+        index = i;
+        sentence.words.push(new Word(++wordId, results[i].description, sentence.sentenceId, results[i].boundingPoly.vertices));
+      }
+    }
+  });
+
+/*  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.!?])/g, '$1\u03B1').split('\u03B1');
   for (let sentence of sentences) {
     let words = sentence.split(' ');
     words = words.map((e) => {
@@ -76,7 +96,7 @@ function parse(results) {
       }
       return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, true, word.index);
     }).filter(r => r != null);
-  });
+  });*/
 
   return phrases;
 }
