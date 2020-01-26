@@ -20,11 +20,8 @@ const fileName = 'assets/fatChick.jpg';
 const file = 'assets/hello.jpg';
 
 exports.getText = (req, res) => {
-  const { image } = req.body;
-  //let imageFile = fs.writeFile(file, new Buffer(image, "base64"), function(err) {});
-
   // Performs text detection on the local file
-  client.textDetection(file)
+  client.textDetection(req.file.path)
     .then((result) => {
     const detections = result[0].textAnnotations;
     const filter = detections.filter((value) => {
@@ -35,7 +32,7 @@ exports.getText = (req, res) => {
       let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
       filteredResults.push(filteredWordObj);
     });
-    res.json(new Page(++pageId, parse(detections), 'caca'));
+    res.json(new Page(++pageId, parse(detections), req.file.path));
   })
     .catch((err) => {
       console.log(err);
