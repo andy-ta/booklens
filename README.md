@@ -1,4 +1,4 @@
-##DEPLOY
+## DEPLOY
 docker build -t andyta/booklens .  
 docker run -p 80:80 -d andyta/booklens  
 docker tag andyta/booklens us.gcr.io/booklens/booklens  
@@ -12,18 +12,19 @@ RUN sudo apt-get update && echo 'Y' | sudo apt-get install google-cloud-sdk
 RUN echo 'Y' | sudo apt-get install google-cloud-sdk-app-engine-java
 
 ## API
-#####POST
-1. /api/pages #create page obj
+##### POST
+###### create page obj, and return a page obj
+1. /api/pages
 ```
 body:
 {
     image: <ImageFile>
 }
 ```
-#####GET
-#######get page obj
+##### GET
+###### get page obj 
 1. /api/pages/:id
-#######get page/sentence/word translation, lang = lang code ex. en-us
+###### get page/sentence/word translation, lang = lang code ex. en-us 
 2. /api/translate/:type/:id?target=${lang} 
-#######get images of a word
+###### get images of a word 
 3. /api/words/:word/images
