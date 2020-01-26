@@ -1,5 +1,12 @@
-import {sentenceId} from "../services";
-
+let { sentenceId, wordId, pageId } = require('../services/index');
+const { Sentence } = require('../models/sentence');
+const { Word } = require('../models/word');
+const { Page } = require('../models/page');
+const axios = require('axios');
+const dictAPI = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`;
+const url = keyword => {
+  return dictAPI + keyword + `/?key=${process.env.DIC_API_KEY}`;
+};
 const vision = require('@google-cloud/vision');
 const fs = require('fs');
 // Creates a client
@@ -13,15 +20,13 @@ const fileName = 'assets/fatChick.jpg';
 const file = 'assets/hello.jpg';
 
 exports.getText = (req, res) => {
-  const { image } = req.body;/*
-  console.log(image);
-  fs.writeFile(file, new Buffer(image, "base64"), function(err) {});*/
+  const { image } = req.body;
+  let imageFile = fs.writeFile(file, new Buffer(image, "base64"), function(err) {});
 
   // Performs text detection on the local file
   client.textDetection(fileName)
     .then((result) => {
     const detections = result[0].textAnnotations;
-    console.log(detections);
     const filter = detections.filter((value) => {
       return value.description.split(" ").length === 1;
     });
@@ -30,7 +35,7 @@ exports.getText = (req, res) => {
       let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
       filteredResults.push(filteredWordObj);
     });
-    res.json(filteredResults);
+    res.json(new Page(++pageId, parse(detections), Buffer.from(imageFile).toString('base64')));
   })
     .catch((err) => {
       console.log(err);
@@ -39,15 +44,38 @@ exports.getText = (req, res) => {
 
 function parse(results) {
   const phrases = [];
-  for (let i = 0; i < results.length; i++) {
-    if (i === 0) {
-      const sentences = results[i].description.split('\n');
-      for (let sentence in sentences) {
-        const words = sentence.split(' ');
-        const newSentence = new Sentence(++sentenceId, words);
-      }
-    }
+  const sentences = results[0].description.split('\n');
+  for (let sentence of sentences) {
+    let words = sentence.split(' ');
+    console.log(words);
+    words = words.map((e, i) => {
+      console.log({e, i});
+      return { index: i, word: e};
+    });
+    const newSentence = new Sentence(++sentenceId, words, sentence);
+    phrases.push(newSentence);
   }
+  results.splice(0, 1); // delete the sentences XD;
+
+  phrases.forEach(sentence => {
+    sentence.words.map(async word => {
+      const izNoun = await isNoun(word.word);
+      return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, izNoun);
+    });
+  });
+
+  return phrases;
 }
 
-
+async function isNoun(word) {
+  const r =  await axios.get(url(word));
+  let result;
+  if (r.data.length && r.data[0].hwi) {
+    result = (({ fl }) => ({
+      isNoun: fl === 'noun'
+    }))(r.data[0]);
+  } else {
+    result = {};
+  }
+  return result.isNoun;
+}

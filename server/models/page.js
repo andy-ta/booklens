@@ -5,3 +5,5 @@ class Page {
         this.image = image;
     }
 }
+
+module.exports = { Page };
