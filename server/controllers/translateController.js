@@ -10,9 +10,11 @@ exports.getTranslation = (req, res) => {
     const page = pages.find(p => p.id === Number.parseInt(id));
     // console.log(page);
     const sentences = [];
-    page.sentences.forEach(sentence => {
-      sentences.push(sentence.sentenceString);
-    });
+    if (page) {
+      page.sentences.forEach(sentence => {
+        sentences.push(sentence.sentenceString);
+      });
+    }
     result = sentences.length ? sentences.join(' ') : null;
     console.log(result);
   } else if (type === 'sentence') {
