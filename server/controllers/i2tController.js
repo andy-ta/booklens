@@ -32,21 +32,65 @@ exports.getPage = (req, res) => {
 };
 
 exports.getText = (req, res) => {
+  const reg = /([.,\/#!$%\^&\*;:{}=\-_`~()?])/g;
   // Performs text detection on the local file
   client.textDetection(req.file.path)
     .then((result) => {
     const detections = result[0].textAnnotations;
-    const filter = detections.filter((value) => {
-      return value.description.split(" ").length === 1;
+    const pageStringObj = detections.shift();
+    const wordsStringObj = detections;
+    // console.log(pageStringObj);
+    // console.log(wordsStringObj);
+    const newWords = [];
+    wordsStringObj.forEach(wordObj => {
+      let found = wordObj.description.match(reg);
+      if (found) {
+        let wordT = (({description, boundingPoly : { vertices }}) => ({id: wordId++, sentenceId: sentenceId++, word: description, vertices}))(wordObj);
+        newWords.push(new Word(wordT.id, wordT.word, wordT.sentenceId, wordT.vertices));
+      } else {
+        let wordT = (({description, boundingPoly : { vertices }}) => ({id: wordId++, sentenceId: sentenceId, word: description, vertices}))(wordObj);
+        newWords.push(new Word(wordT.id, wordT.word, wordT.sentenceId, wordT.vertices));
+      }
     });
-    const filteredResults = [];
-    filter.forEach(wordObj => {
-      let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
-      filteredResults.push(filteredWordObj);
+    const newSentencesHolder = [];
+    for (let i = 0; i <= sentenceId; i++) {
+      newSentencesHolder.push({
+        id: null,
+        words: [],
+      });
+    }
+    // console.log(newSentences);
+    let currentSentenceID = 0;
+    newWords.forEach(word => {
+      if (word.sentenceId === currentSentenceID) {
+        newSentencesHolder[currentSentenceID].id = currentSentenceID;
+        newSentencesHolder[currentSentenceID].words.push(word);
+      } else {
+        currentSentenceID++;
+        newSentencesHolder[currentSentenceID].id = currentSentenceID;
+        newSentencesHolder[currentSentenceID].words.push(word);
+      }
     });
-    const p = new Page(++pageId, parse(detections), req.file.path);
-    pages.push(p);
-    res.json(p);
+    const realNewSentences = [];
+    newSentencesHolder.forEach(s => {
+      let sentenceString = '';
+      s.words.forEach(w => {
+        sentenceString = sentenceString + `${w.word} `;
+      });
+      realNewSentences.push(new Sentence(s.id, s.words, sentenceString));
+    });
+    const newPage = new Page(++pageId, realNewSentences, req.file.path);
+    pages.push(newPage);
+    res.json(newPage);
+    // console.log(realNewSentences);
+      // const filteredResults = [];
+    //   wordsOnly.forEach(wordObj => {
+    //   let filteredWordObj = (({description, boundingPoly : { vertices }}) => ({word: description, vertices}))(wordObj);
+    //   filteredResults.push(filteredWordObj);
+    // });
+    // const p = new Page(++pageId, parse(detections), req.file.path);
+    // pages.push(p);
+    // res.json(p);
   })
     .catch((err) => {
       console.log(err);
@@ -56,19 +100,32 @@ exports.getText = (req, res) => {
 function parse(results) {
   const phrases = [];
   const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/g, '$1\u03B1').split('\u03B1');
+  let index = 0;
+  // console.log(sentences);
   for (let sentence of sentences) {
     let words = sentence.split(' ');
-    words = words.map((e, i) => {
-      return e === '' ? null : { index: i, word: e};
-    }).filter(val => val !== null);
+    let wordsRe = [];
+    words.forEach(e => {
+      let temp = e === '' ? null : { index: index++, word: e};
+      if (temp) {
+        wordsRe.push(temp);
+      }
+    });
+    // console.log(wordsRe);
 
-    if (words.length > 0) {
-      const newSentence = new Sentence(++sentenceId, words, sentence);
+    if (wordsRe.length > 0) {
+      const newSentence = new Sentence(++sentenceId, wordsRe, sentence);
       phrases.push(newSentence);
     }
   }
-  results.splice(0, 1); // delete the sentences XD;
-
+  // console.log(results);
+  // results.splice(0, 1); // delete the sentences XD;
+  //
+  // console.log(results.length);
+  // console.log(index);
+  // console.log(results);
+  // console.log(phrases.length);
+  // console.log(results);
   phrases.forEach(sentence => {
     sentence.words = sentence.words.map(word => {
       return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, true);
