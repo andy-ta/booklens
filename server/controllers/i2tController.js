@@ -25,6 +25,12 @@ exports.getImage = (req, res) => {
   res.sendFile(pages.pages.find(page => page.id === parseInt(id)).image);
 };
 
+
+exports.getPage = (req, res) => {
+  const { id } = req.params;
+  res.json(pages.pages.find(page => page.id === parseInt(id)));
+};
+
 exports.getText = (req, res) => {
   // Performs text detection on the local file
   client.textDetection(req.file.path)
