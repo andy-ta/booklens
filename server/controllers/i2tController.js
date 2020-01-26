@@ -25,10 +25,13 @@ exports.getImage = (req, res) => {
   res.sendFile(pages.find(page => page.id === parseInt(id)).image);
 };
 
-
 exports.getPage = (req, res) => {
   const { id } = req.params;
   res.json(pages.find(page => page.id === parseInt(id)));
+};
+
+exports.getPages = (req, res) => {
+  res.json(pages);
 };
 
 exports.getText = (req, res) => {
@@ -65,16 +68,17 @@ function parse(results) {
     phrases.push(new Sentence(++sentenceId, i, [], sentence));
   });
 
-  let index = 1;
-  phrases.forEach((sentence, x) => {
-    // Go through each actual word
-    for (let i = index; i < results.length; i++) {
-      if (sentence.sentenceString.includes(results[i].description)) {
-        index = i;
-        sentence.words.push(new Word(++wordId, results[i].description, sentence.sentenceId, results[i].boundingPoly.vertices));
+  let sent = 0;
+  // Go through each actual word
+  for (let i = 1; i < results.length; i++) {
+    for (let j = sent; j < phrases.length; j++) {
+      if (phrases[j].sentenceString.includes(results[i].description)) {
+        phrases[j].words.push(new Word(++wordId, results[i].description, j, results[i].boundingPoly.vertices));
+        sent = j;
+        break;
       }
     }
-  });
+  }
 
 /*  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.!?])/g, '$1\u03B1').split('\u03B1');
   for (let sentence of sentences) {

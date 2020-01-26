@@ -14,6 +14,8 @@ router.get('/pages/:id/image', i2tController.getImage);
 
 router.get('/pages/:id', i2tController.getPage);
 
+router.get('/pages', i2tController.getPages);
+
 router.get('/translate/:type/:id', translateController.getTranslation);
 
 router.get('/syllable/:word', dictionaryController.getSyllable);
