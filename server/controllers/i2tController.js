@@ -55,24 +55,27 @@ exports.getText = (req, res) => {
 
 function parse(results) {
   const phrases = [];
-  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/g, '$1\u03B1').split('\u03B1');
+  const sentences = results[0].description.replace(/\n/g, ' ').replace(/([.!?])/g, '$1\u03B1').split('\u03B1');
+  let index = 0;
   for (let sentence of sentences) {
     let words = sentence.split(' ');
-    words = words.map((e, i) => {
-      return e === '' ? null : { index: i, word: e};
-    }).filter(val => val !== null);
+    words = words.map((e) => {
+      return { index: index++, word: e};
+    });
 
     if (words.length > 0) {
       const newSentence = new Sentence(++sentenceId, words, sentence);
       phrases.push(newSentence);
     }
   }
-  results.splice(0, 1); // delete the sentences XD;
 
   phrases.forEach(sentence => {
     sentence.words = sentence.words.map(word => {
-      return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, true);
-    });
+      if (word.word.length === 0) {
+        return null;
+      }
+      return new Word(++wordId, word.word, sentence.id, results[word.index].boundingPoly.vertices, true, word.index);
+    }).filter(r => r != null);
   });
 
   return phrases;
