@@ -1,3 +1,5 @@
+import {sentenceId} from "../services";
+
 const vision = require('@google-cloud/vision');
 const fs = require('fs');
 // Creates a client
@@ -16,7 +18,7 @@ exports.getText = (req, res) => {
   fs.writeFile(file, new Buffer(image, "base64"), function(err) {});*/
 
   // Performs text detection on the local file
-  client.textDetection(image)
+  client.textDetection(fileName)
     .then((result) => {
     const detections = result[0].textAnnotations;
     console.log(detections);
@@ -34,5 +36,18 @@ exports.getText = (req, res) => {
       console.log(err);
     });
 };
+
+function parse(results) {
+  const phrases = [];
+  for (let i = 0; i < results.length; i++) {
+    if (i === 0) {
+      const sentences = results[i].description.split('\n');
+      for (let sentence in sentences) {
+        const words = sentence.split(' ');
+        const newSentence = new Sentence(++sentenceId, words);
+      }
+    }
+  }
+}
 
 

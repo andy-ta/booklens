@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
     res.send('gietmamaw');
 });
 
-router.post('/image', i2tController.getText);
+router.post('/pages', i2tController.getText);
 
 router.get('/syllable/:word', dictionaryController.getSyllable);
 
