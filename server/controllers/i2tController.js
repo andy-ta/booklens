@@ -2,7 +2,7 @@ let { sentenceId, wordId, pageId } = require('../services/index');
 const { Sentence } = require('../models/sentence');
 const { Word } = require('../models/word');
 const { Page } = require('../models/page');
-const { pages } = require('../services/database');
+const pages = require('../services/database');
 const axios = require('axios');
 const dictAPI = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/`;
 const url = keyword => {
@@ -22,13 +22,13 @@ const file = 'assets/hello.jpg';
 
 exports.getImage = (req, res) => {
   const { id } = req.params;
-  res.sendFile(pages.find(page => page.id === parseInt(id)).image);
+  res.sendFile(pages.pages.find(page => page.id === parseInt(id)).image);
 };
 
 
 exports.getPage = (req, res) => {
   const { id } = req.params;
-  res.json(pages.find(page => page.id === parseInt(id)));
+  res.json(pages.pages.find(page => page.id === parseInt(id)));
 };
 
 exports.getText = (req, res) => {
@@ -45,7 +45,7 @@ exports.getText = (req, res) => {
       filteredResults.push(filteredWordObj);
     });
     const p = new Page(++pageId, parse(detections), req.file.path);
-    pages.push(p);
+    pages.pages.push(p);
     res.json(p);
   })
     .catch((err) => {
