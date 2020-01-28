@@ -50,11 +50,9 @@ function Word({
             Axios.get(
                 `../api/translate/sentence/${sentence.id}?target=${lang}`
             ).then(res => {
-                // if (res.code === 200) {
                 setTranslatedSentence(res.data);
                 setSelectedSentence(sentence.sentenceNumber);
                 setHighlighted(null);
-                // }
             });
         }
     }, [
