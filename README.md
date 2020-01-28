@@ -1,8 +1,8 @@
 ## DEPLOY
 docker build -t andyta/booklens .  
 docker run -p 80:80 -d andyta/booklens  
-docker tag andyta/booklens us.gcr.io/booklens/booklens  
-docker push us.gcr.io/booklens/booklens
+docker tag andyta/booklens us.gcr.io/booklens-266214/booklens  
+docker push us.gcr.io/booklens-266214/booklens
 
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
