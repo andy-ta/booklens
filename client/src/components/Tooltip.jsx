@@ -35,9 +35,9 @@ export default function Tooltip({ word, id, thumbnail, setThumbnail }) {
     }, [word, thumbnail, setThumbnail]);
 
     useEffect(() => {
-        Axios.get(`../api/translate/word/${id}?target=${lang}`).then(res =>
-            setTranslation(res.data)
-        );
+        Axios.get(`../api/translate/word/${id}?target=${lang}`).then(res => {
+            setTranslation(res.data);
+        });
     }, [id, lang]);
 
     return (
@@ -52,22 +52,43 @@ export default function Tooltip({ word, id, thumbnail, setThumbnail }) {
                     <source src={'data:audio/wav;base64,' + audio} />
                 </audio>
             )}
-            <Fade in={thumbnail && !noImage} mountOnEnter unmountOnExit>
-                <Paper elevation={3}>
+            <Paper elevation={3} style={{ minWidth: '100px' }}>
+                <Fade
+                    in={thumbnail && !noImage}
+                    mountOnEnter
+                    unmountOnExit
+                    style={{ marginBottom: '-8px' }}
+                >
                     <img src={thumbnail} alt={word} />
-                </Paper>
-            </Fade>
-
-            {!thumbnail && !noImage && (
-                <div style={{ height: '64px', textAlign: 'center' }}>
-                    <CircularProgress />
-                </div>
-            )}
-            <div style={{ height: '24px' }}>
-                <Fade in={translation !== null} mountOnEnter unmountOnExit>
-                    <div style={{ textAlign: 'center' }}>{translation}</div>
                 </Fade>
-            </div>
+                {!thumbnail && !noImage && (
+                    <div
+                        style={{
+                            height: '64px',
+                            textAlign: 'center',
+                            padding: '1em'
+                        }}
+                    >
+                        <CircularProgress />
+                    </div>
+                )}
+                <Fade
+                    in={translation !== null && lang !== null}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <div
+                        style={{
+                            textAlign: 'center',
+                            fontSize: '20px',
+                            height: '40px',
+                            lineHeight: '40px'
+                        }}
+                    >
+                        {translation}
+                    </div>
+                </Fade>
+            </Paper>
         </>
     );
 }

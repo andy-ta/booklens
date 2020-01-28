@@ -60,6 +60,11 @@ export default function Page({ page, imageUri, setPage, setImage }) {
                         setHighlighted(null);
                         setSelectedSentence(null);
                     }}
+                    onTouchStart={event => {
+                        if (event.target.attrs.class === 'word') return;
+                        setHighlighted(null);
+                        setSelectedSentence(null);
+                    }}
                     dragBoundFunc={pos => {
                         console.log(pos, window.innerHeight);
                         return {

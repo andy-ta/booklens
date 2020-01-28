@@ -50,9 +50,11 @@ function Word({
             Axios.get(
                 `../api/translate/sentence/${sentence.id}?target=${lang}`
             ).then(res => {
+                // if (res.code === 200) {
                 setTranslatedSentence(res.data);
                 setSelectedSentence(sentence.sentenceNumber);
                 setHighlighted(null);
+                // }
             });
         }
     }, [
@@ -68,7 +70,8 @@ function Word({
         <Group {...origin}>
             <Shape
                 class="word"
-                // fill="white"
+                fill={visible || selectedSentence ? '#3f51b5' : 'transparent'}
+                opacity={0.3}
                 sceneFunc={(context, shape) => {
                     context.beginPath();
                     context.lineTo(
@@ -136,7 +139,7 @@ function Word({
                             position: 'absolute',
                             top: y,
                             left: x,
-                            transform: 'translate(-50%, -60%)'
+                            transform: 'translate(-50%, -80%)'
                         }}
                     >
                         <Tooltip
@@ -162,7 +165,7 @@ function Word({
                     </audio>
                 </Portal>
             )}
-            {translatedSentence && selectedSentence && (
+            {translatedSentence && selectedSentence && lang && (
                 <Portal>
                     <Paper
                         elevation={3}

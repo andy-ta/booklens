@@ -23,7 +23,12 @@ function App() {
                 <Route exact path="/">
                     <Container
                         maxWidth="md"
-                        style={{ marginTop: 24, textAlign: 'center' }}
+                        style={{
+                            marginTop: 24,
+                            textAlign: 'center',
+                            overflowY: 'auto',
+                            maxHeight: '90vh'
+                        }}
                     >
                         <Pages />
                     </Container>

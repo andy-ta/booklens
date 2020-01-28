@@ -27,7 +27,7 @@ function CameraView({ setPage, setImage }) {
     return (
         <Camera
             onTakePhoto={dataUri => createPage(dataUri)}
-            idealFacingMode={FACING_MODES.REAR}
+            idealFacingMode={FACING_MODES.ENVIRONMENT}
             isImageMirror={false}
             // isFullscreen
             // isMaxResolution
